@@ -1,10 +1,13 @@
-#include <iostream>
+﻿#include <iostream>
 #include "array.h"
 using namespace std;
 
 int main() {
-	Array obj(10);
-	obj.print();
+    Array arr1(5); 
+    arr1.print(); 
 
-	return 0;
+    Array arr2(5, 10, 30);
+    arr2.print();
+
+    return 0;
 }
