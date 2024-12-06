@@ -11,5 +11,9 @@ public:
     Array(const Array& other);
     ~Array();
 
+    int min() const;
+    int max() const;
+    void sorted();
+
     void print() const;
 };
