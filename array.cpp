@@ -56,32 +56,34 @@ Array Array::operator+(const Array& other) const {
 int Array::min() const {
     if (size == 0)
     {
-        int min_value = array[0];
-        for (size_t i = 1; i < size; ++i)
-        {
-            if (array[i] < min_value)
-            {
-                min_value = array[i];
-            }
-        }
-        return min_value;
+        cout << "Array is empty. Returning 0." << endl;
+        return 0;
     }
+    int min_value = array[0];
+    for (size_t i = 1; i < size; ++i)
+    {
+        if (array[i] < min_value) {
+            min_value = array[i];
+        }
+    }
+    return min_value;
 }
 
 
 int Array::max() const {
-    if (size != 0)
+    if (size == 0)
     {
-        int max_value = array[0];
-        for (size_t i = 1; i < size; ++i)
-        {
-            if (array[i] > max_value)
-            {
-                max_value = array[i];
-            }
-        }
-        return max_value;
+        cout << "Array is empty. Returning 0." << endl;
+        return 0;
     }
+    int max_value = array[0];
+    for (size_t i = 1; i < size; ++i)
+    {
+        if (array[i] > max_value) {
+            max_value = array[i];
+        }
+    }
+    return max_value;
 }
 
 void Array::sorted() {
