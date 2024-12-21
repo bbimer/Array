@@ -14,10 +14,18 @@ public:
     Array& operator=(const Array& other);
     Array operator+(const Array& other) const;
     Array& operator+=(const Array& other);
+    int& operator[](size_t index);
+    bool operator==(const Array& other) const;
+    bool operator!=(const Array& other) const;
+    bool operator>(const Array& other) const;
+    bool operator<(const Array& other) const;
+    //bool operator*(const Array& other) const;
+
 
     int min() const;
     int max() const;
     void sorted();
 
     void print() const;
+    friend std::ostream& operator<<(std::ostream& os, const Array& arr);
 };

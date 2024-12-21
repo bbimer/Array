@@ -58,6 +58,44 @@ Array& Array::operator+=(const Array& other) {
     return *this;
 }
 
+int& Array::operator[](size_t index) {
+    return array[index];
+}
+
+ostream& operator<<(ostream& os, const Array& arr) {
+    for (size_t i = 0; i < arr.size; ++i)
+    {
+        os << arr.array[i] << " ";
+    }
+    return os;
+}
+
+bool Array::operator==(const Array& other) const {
+    if (size != other.size) return false;
+    for (size_t i = 0; i < size; ++i)
+    {
+        if (array != other.array) return false;
+    }
+    return true;
+}
+
+bool Array::operator!=(const Array& other) const {
+    return !(*this == other);
+}
+
+bool Array::operator>(const Array& other) const {
+    return (size > other.size);
+}
+
+bool Array::operator<(const Array& other) const {
+    return (size < other.size);
+}
+
+//bool Array::operator*(const Array& other) const {
+//    
+//}
+
+
 int Array::min() const {
     if (size == 0)
     {
@@ -73,7 +111,6 @@ int Array::min() const {
     }
     return min_value;
 }
-
 
 int Array::max() const {
     if (size == 0)
