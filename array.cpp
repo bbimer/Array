@@ -53,10 +53,10 @@ Array Array::operator+(const Array& other) const {
     return result;
 }
 
-
-
-
-
+Array& Array::operator+=(const Array& other) {
+    *this = *this + other;
+    return *this;
+}
 
 int Array::min() const {
     if (size == 0)

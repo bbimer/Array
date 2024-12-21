@@ -13,7 +13,7 @@ public:
 
     Array& operator=(const Array& other);
     Array operator+(const Array& other) const;
-
+    Array& operator+=(const Array& other);
 
     int min() const;
     int max() const;
