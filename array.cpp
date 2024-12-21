@@ -16,6 +16,11 @@ Array::Array(size_t n, int min, int max) : size(n) {
 }
 
 Array::Array(const Array& other) : size(other.size) {
+    if (array == 0)
+    {
+        array = nullptr;
+        return;
+    }
     array = new int[size + 1];
     for (size_t i = 0; i < size; ++i) {
         array[i] = other.array[i];
