@@ -16,14 +16,45 @@ Array::Array(size_t n, int min, int max) : size(n) {
 }
 
 Array::Array(const Array& other) : size(other.size) {
-    array = new int[size];
+    array = new int[size + 1];
     for (size_t i = 0; i < size; ++i) {
         array[i] = other.array[i];
     }
 }
 
+Array& Array::operator=(const Array& other) {
+    if (this == &other) return *this;
+    delete[] array;
+
+    size = other.size;
+    array = new int[size];
+    for (size_t i = 0; i < size; ++i)
+        {
+            array[i] = other.array[i];
+        }
+    return *this;
+}
+
+Array Array::operator+(const Array& other) const {
+    Array result(size + other.size);
+    for (size_t i = 0; i < size; ++i)
+    {
+        result.array[i] = array[i];
+    }
+    for (size_t i = 0; i < other.size; ++i)
+    {
+        result.array[size + i] = other.array[i];
+    }
+    return result;
+}
+
+
+
+
+
+
 int Array::min() const {
-    if (size != 0)
+    if (size == 0)
     {
         int min_value = array[0];
         for (size_t i = 1; i < size; ++i)
@@ -74,6 +105,7 @@ void Array::sorted() {
     }
     cout << endl;
 }
+
 
 
 

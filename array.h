@@ -11,6 +11,10 @@ public:
     Array(const Array& other);
     ~Array();
 
+    Array& operator=(const Array& other);
+    Array operator+(const Array& other) const;
+
+
     int min() const;
     int max() const;
     void sorted();
