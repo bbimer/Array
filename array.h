@@ -19,7 +19,6 @@ public:
     bool operator!=(const Array& other) const;
     bool operator>(const Array& other) const;
     bool operator<(const Array& other) const;
-    //bool operator*(const Array& other) const;
 
 
     int min() const;

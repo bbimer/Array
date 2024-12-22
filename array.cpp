@@ -8,11 +8,10 @@ Array::Array(size_t n) : size(n) {
 
 Array::Array(size_t n, int min, int max) : size(n) {
     array = new int[size];
-    srand(static_cast<unsigned>(time(nullptr)));
     for (size_t i = 0; i < size; ++i)
     {
         array[i] = min + rand() % (max - min + 1);
-    } 
+    }
 }
 
 Array::Array(const Array& other) : size(other.size) {
@@ -91,11 +90,6 @@ bool Array::operator<(const Array& other) const {
     return (size < other.size);
 }
 
-//bool Array::operator*(const Array& other) const {
-//    
-//}
-
-
 int Array::min() const {
     if (size == 0)
     {
@@ -142,16 +136,12 @@ void Array::sorted() {
         }
     }
 
-    cout << "sorted: ";
     for (size_t i = 0; i < size; i++)
     {
         cout << array[i] << " ";
     }
     cout << endl;
 }
-
-
-
 
 Array::~Array() {
     delete[] array;
