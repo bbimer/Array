@@ -14,16 +14,20 @@ Array::Array(size_t n, int min, int max) : size(n) {
     }
 }
 
-Array::Array(const Array& other) : size(other.size) {
-    if (array == 0)
-    {
-        array = nullptr;
-        return;
+Array::Array(const Array& other) : size(other.size), array(nullptr) {
+    if (size > 0) {
+        array = new int[size];
+        for (size_t i = 0; i < size; ++i)
+        {
+            array[i] = other.array[i];
+        }
     }
-    array = new int[size + 1];
-    for (size_t i = 0; i < size; ++i) {
-        array[i] = other.array[i];
-    }
+}
+
+
+Array::Array(Array&& move) noexcept : size(move.size), array(move.array) {
+    move.array = nullptr;
+    move.size = 0;
 }
 
 Array& Array::operator=(const Array& other) {
@@ -36,6 +40,19 @@ Array& Array::operator=(const Array& other) {
         {
             array[i] = other.array[i];
         }
+    return *this;
+}
+
+Array& Array::operator=(Array&& right) noexcept {
+    if (this == &right) return *this;
+
+    delete[] array;
+    size = right.size;
+    array = right.array;
+
+    right.size = 0;
+    right.array = nullptr;
+
     return *this;
 }
 

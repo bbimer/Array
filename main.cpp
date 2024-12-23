@@ -50,7 +50,11 @@ int main() {
     cout << "=================" << endl;
     cout << "operator < " << endl;
     cout << (arr1 < arr2) << endl;
-
+    cout << "=================" << endl;
+    Array arr4(6, 10, 99);
+    Array arr5 = std::move(arr4);
+    cout << "operator (move)" << endl;
+    cout << arr5 << endl;
 
     return 0;
 }

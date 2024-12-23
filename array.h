@@ -9,9 +9,11 @@ public:
     Array(size_t n = 0);
     Array(size_t n, int min, int max); 
     Array(const Array& other);
+    Array(Array&& other) noexcept;
     ~Array();
 
     Array& operator=(const Array& other);
+    Array& operator=(Array&& other) noexcept;
     Array operator+(const Array& other) const;
     Array& operator+=(const Array& other);
     int& operator[](size_t index);
