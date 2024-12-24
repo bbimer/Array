@@ -2,18 +2,19 @@
 #include <iostream>
 using namespace std;
 
+template <typename T>
 class Array {
 private:
     size_t size;
-    int* array;
+    T* array;
 
 public:
     Array(size_t n) : size(n) {
-        array = new int[size]();
+        array = new T[size]();
     }
 
-    Array(size_t n, int min, int max) : size(n) {
-        array = new int[size];
+    Array(size_t n, T min, T max) : size(n) {
+        array = new T[size];
         for (size_t i = 0; i < size; ++i)
         {
             array[i] = min + rand() % (max - min + 1);
@@ -22,7 +23,7 @@ public:
 
     Array(const Array& other) : size(other.size), array(nullptr) {
         if (size > 0) {
-            array = new int[size];
+            array = new T[size];
             for (size_t i = 0; i < size; ++i)
             {
                 array[i] = other.array[i];
@@ -41,7 +42,7 @@ public:
         delete[] array;
 
         size = other.size;
-        array = new int[size];
+        array = new T[size];
         for (size_t i = 0; i < size; ++i)
         {
             array[i] = other.array[i];
@@ -62,7 +63,7 @@ public:
         return *this;
     }
 
-    Array operator+(const Array& other) const {
+    Array operator+(const Array& other) {
         Array result(size + other.size);
         for (size_t i = 0; i < size; ++i)
         {
@@ -80,7 +81,7 @@ public:
         return *this;
     }
 
-    int& operator[](size_t index) {
+    T& operator[](size_t index) {
         return array[index];
     }
 
@@ -115,46 +116,46 @@ public:
         return (size < other.size);
     }
 
-    int min() const {
+    T min() const {
         if (size == 0)
         {
             cout << "Array is empty. Returning 0." << endl;
             return 0;
         }
-        int min_value = array[0];
+        T min_value = array[0];
         for (size_t i = 1; i < size; ++i)
         {
             if (array[i] < min_value) {
                 min_value = array[i];
             }
         }
-        return min_value;
+        return T();
     }
 
-    int max() const {
+    T max() const {
         if (size == 0)
         {
             cout << "Array is empty. Returning 0." << endl;
             return 0;
         }
-        int max_value = array[0];
+        T max_value = array[0];
         for (size_t i = 1; i < size; ++i)
         {
             if (array[i] > max_value) {
                 max_value = array[i];
             }
         }
-        return max_value;
+        return T();
     }
 
-    void sorted() {
+    void sorted() const {
         for (size_t i = 0; i < size - 1; ++i)
         {
             for (size_t j = 0; j < size - i - 1; ++j)
             {
                 if (array[j] > array[j + 1])
                 {
-                    int temp = array[j];
+                    T temp = array[j];
                     array[j] = array[j + 1];
                     array[j + 1] = temp;
                 }

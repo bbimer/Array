@@ -5,8 +5,8 @@ using namespace std;
 int main() {
     srand(static_cast<unsigned>(time(nullptr)));
 
-    Array arr1(5, 10, 99);
-    Array arr2(5, 10, 99);
+    Array<int> arr1(5, 10, 99);
+    Array<int> arr2(5, 10, 99);
     cout << "array1: ";
     arr1.print(); 
     cout << "array2: ";
