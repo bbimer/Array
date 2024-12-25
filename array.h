@@ -5,8 +5,9 @@ using namespace std;
 template <typename T>
 class Array {
 private:
-    size_t size;
+    static const size_t cnt_capacity = 80;
     size_t capacity;
+    size_t size;
     T* array;
 
     void rlz_capacity(size_t new_capacity) {
@@ -22,11 +23,11 @@ private:
     }
 
 public:
-    Array() : size(0), capacity(1), array(new T[1]) {}
+    Array() : size(0), capacity(cnt_capacity), array(new T[cnt_capacity]) {}
     
     Array(size_t init_capacity) : size(0), capacity(init_capacity), array(new T[init_capacity]) {}
 
-    Array(size_t n, T min, T max) : size(n), capacity(n), array(new T[n]) {
+    Array(size_t size, T min, T max) : size(size), capacity(size), array(new T[size]) {
         for (size_t i = 0; i < size; ++i)
         {
             array[i] = min + rand() % (max - min + 1);
@@ -182,6 +183,12 @@ public:
     ~Array() {
         delete[] array;
         array = nullptr;
+    }
+
+    void append(const T& val) {
+        if (size >= capacity)
+            rlz_capacity(capacity * 2);
+        array[size++] = val;
     }
 
     int get_size() const {
