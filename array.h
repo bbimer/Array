@@ -6,35 +6,44 @@ template <typename T>
 class Array {
 private:
     size_t size;
+    size_t capacity;
     T* array;
 
-public:
-    Array(size_t n) : size(n) {
-        array = new T[size]();
+    void rlz_capacity(size_t new_capacity) {
+        T* new_array = new T[new_capacity];
+        for (size_t i = 0; i < size; ++i)
+        {
+            new_array[i] = array[i];
+        }
+
+        delete[] array;
+        array = new_array;
+        capacity = new_capacity;
     }
 
-    Array(size_t n, T min, T max) : size(n) {
-        array = new T[size];
+public:
+    Array() : size(0), capacity(1), array(new T[1]) {}
+    
+    Array(size_t init_capacity) : size(0), capacity(init_capacity), array(new T[init_capacity]) {}
+
+    Array(size_t n, T min, T max) : size(n), capacity(n), array(new T[n]) {
         for (size_t i = 0; i < size; ++i)
         {
             array[i] = min + rand() % (max - min + 1);
         }
     }
 
-    Array(const Array& other) : size(other.size), array(nullptr) {
-        if (size > 0) {
-            array = new T[size];
-            for (size_t i = 0; i < size; ++i)
-            {
-                array[i] = other.array[i];
-            }
+    Array(const Array& other) : size(other.size), capacity(other.capacity), array(new T(other.capacity)) {
+        for (size_t i = 0; i < size; ++i)
+        {
+            array[i] = other.array[i];
         }
     }
 
-
-    Array(Array&& move) noexcept : size(move.size), array(move.array) {
-        move.array = nullptr;
+    Array(Array&& move) noexcept : size(move.size), capacity(move.capacity), array(move.array) {
         move.size = 0;
+        move.capacity = 0;
+        move.array = nullptr;
     }
 
     Array& operator=(const Array& other) {
@@ -42,7 +51,8 @@ public:
         delete[] array;
 
         size = other.size;
-        array = new T[size];
+        capacity = other.capacity;
+        array = new T[capacity];
         for (size_t i = 0; i < size; ++i)
         {
             array[i] = other.array[i];
@@ -55,9 +65,11 @@ public:
 
         delete[] array;
         size = right.size;
+        capacity = right.capacity;
         array = right.array;
 
         right.size = 0;
+        right.capacity = 0;
         right.array = nullptr;
 
         return *this;
@@ -65,6 +77,7 @@ public:
 
     Array operator+(const Array& other) {
         Array result(size + other.size);
+        result = size + other.size;
         for (size_t i = 0; i < size; ++i)
         {
             result.array[i] = array[i];
@@ -92,8 +105,6 @@ public:
         return os;
     }
 
-
-
     bool operator==(const Array& other) const {
         if (size != other.size) return false;
         for (size_t i = 0; i < size; ++i)
@@ -102,7 +113,6 @@ public:
         }
         return true;
     }
-
 
     bool operator!=(const Array& other) const {
         return !(*this == other);
@@ -148,7 +158,7 @@ public:
         return T();
     }
 
-    void sorted() const {
+    void sorted() {
         for (size_t i = 0; i < size - 1; ++i)
         {
             for (size_t j = 0; j < size - i - 1; ++j)
@@ -172,6 +182,14 @@ public:
     ~Array() {
         delete[] array;
         array = nullptr;
+    }
+
+    int get_size() const {
+        return size;
+    }
+
+    int get_capacity() const {
+        return capacity;
     }
 
     void print() const {
