@@ -191,6 +191,13 @@ public:
         array[size++] = val;
     }
 
+    void errase(const T& idx) {
+        if (idx > size) return;
+        for (size_t i = idx; i < size; ++i)
+            array[i] = array[i + 1];
+        --size;
+    }
+
     int get_size() const {
         return size;
     }

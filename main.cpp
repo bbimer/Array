@@ -15,7 +15,9 @@ int main() {
 
     arr2.append(3);
     arr2.print();
-        
+    arr2.errase(0);
+    arr2.print();
+
     cout << arr1.get_capacity() << endl;
     cout << arr3.get_capacity() << endl;
 
