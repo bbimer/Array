@@ -198,6 +198,25 @@ public:
         --size;
     }
 
+    void clear() {
+        delete[] array;
+        array = new T[capacity];
+        size = NULL;
+    }
+
+    void reserve(const T& cps) {
+        capacity += cps;
+    }
+
+    void shrink() {
+        T* new_array = new T[size];
+        for (size_t i = 0; i < size; ++i)
+            new_array[i] = array[i];
+        delete[] array;
+        array = new_array;
+        capacity = size;
+    }
+
     int get_size() const {
         return size;
     }

@@ -17,9 +17,8 @@ int main() {
     arr2.print();
     arr2.errase(0);
     arr2.print();
-
-    cout << arr1.get_capacity() << endl;
-    cout << arr3.get_capacity() << endl;
+    arr2.shrink();
+    cout << arr2.get_capacity() << endl;
 
     return 0;
 }
