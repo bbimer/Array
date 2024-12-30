@@ -8,8 +8,8 @@ int main() {
     Array<int> arr1(10);
     Array<int> arr2(5, 10, 99);
     Array<int> arr3;
-    cout << "array1: ";
-    arr1.print(); 
+    //cout << "array1: ";
+    //arr1.print(); 
     cout << "array2: ";
     arr2.print();
 
@@ -19,6 +19,8 @@ int main() {
     arr2.print();
     arr2.shrink();
     cout << arr2.get_capacity() << endl;
+    arr2.clear();
+    arr2.print();
 
     return 0;
 }

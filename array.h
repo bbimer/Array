@@ -191,6 +191,14 @@ public:
         array[size++] = val;
     }
 
+    void pop() {
+        --size;
+    }
+
+    T& top() {
+        return array[size - 1];
+    }
+
     void errase(const T& idx) {
         if (idx > size) return;
         for (size_t i = idx; i < size; ++i)
