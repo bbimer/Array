@@ -185,18 +185,35 @@ public:
         array = nullptr;
     }
 
-    void append(const T& val) {
+    void LF_append(const T& val) {
         if (size >= capacity)
             rlz_capacity(capacity * 2);
         array[size++] = val;
     }
 
-    void pop() {
+    void F_pop() {
+        if (size > 0) {
+            for (size_t i = 1; i < size; ++i) {
+                array[i - 1] = array[i];
+            }
+            --size;
+        }
+        else
+            cout << "array empty!" << endl;
+    }
+
+    void L_pop() {
         --size;
     }
 
-    T& top() {
+    T& LF_top() {
         return array[size - 1];
+    }
+
+    void LF_clear() {
+        delete[] array;
+        array = new T[capacity];
+        size = NULL;
     }
 
     void errase(const T& idx) {
@@ -204,12 +221,6 @@ public:
         for (size_t i = idx; i < size; ++i)
             array[i] = array[i + 1];
         --size;
-    }
-
-    void clear() {
-        delete[] array;
-        array = new T[capacity];
-        size = NULL;
     }
 
     void reserve(const T& cps) {
