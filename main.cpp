@@ -13,13 +13,13 @@ int main() {
     cout << "array2: ";
     arr2.print();
 
-    arr2.append(3);
+    arr2.LF_append(3);
     arr2.print();
     arr2.errase(0);
     arr2.print();
     arr2.shrink();
     cout << arr2.get_capacity() << endl;
-    arr2.clear();
+    arr2.LF_clear();
     arr2.print();
 
     return 0;

@@ -11,21 +11,38 @@ private:
     T* array;
 
     void rlz_capacity(size_t new_capacity) {
-        T* new_array = new T[new_capacity];
-        for (size_t i = 0; i < size; ++i)
+        try
         {
-            new_array[i] = array[i];
-        }
+            T* new_array = new T[new_capacity];
+            for (size_t i = 0; i < size; ++i)
+            {
+                new_array[i] = array[i];
+            }
 
-        delete[] array;
-        array = new_array;
-        capacity = new_capacity;
+            delete[] array;
+            array = new_array;
+            capacity = new_capacity;
+        }
+        catch (const bad_alloc&)
+        {
+            throw runtime_error("failed to allocate memory.");
+        }
     }
 
 public:
     Array() : size(0), capacity(cnt_capacity), array(new T[cnt_capacity]) {}
-    
-    Array(size_t init_capacity) : size(0), capacity(init_capacity), array(new T[init_capacity]) {}
+
+    Array(size_t init_capacity) : size(0), capacity(init_capacity) {
+        if (init_capacity == 0) {
+            throw invalid_argument("Initial capacity cannot be zero.");
+        }
+        try {
+            array = new T[init_capacity];
+        }
+        catch (const bad_alloc&) {
+            throw runtime_error("Failed to allocate memory.");
+        }
+    }
 
     Array(size_t size, T min, T max) : size(size), capacity(size), array(new T[size]) {
         for (size_t i = 0; i < size; ++i)
@@ -35,9 +52,16 @@ public:
     }
 
     Array(const Array& other) : size(other.size), capacity(other.capacity), array(new T(other.capacity)) {
-        for (size_t i = 0; i < size; ++i)
+        try
         {
-            array[i] = other.array[i];
+            for (size_t i = 0; i < size; ++i)
+            {
+                array[i] = other.array[i];
+            }
+        }
+        catch (const bad_alloc&)
+        {
+            throw runtime_error("failed to allocate memory.");
         }
     }
 
@@ -53,10 +77,17 @@ public:
 
         size = other.size;
         capacity = other.capacity;
-        array = new T[capacity];
-        for (size_t i = 0; i < size; ++i)
+        try
         {
-            array[i] = other.array[i];
+            array = new T[capacity];
+            for (size_t i = 0; i < size; ++i)
+            {
+                array[i] = other.array[i];
+            }
+        }
+        catch (const bad_alloc&)
+        {
+            throw runtime_error("failed to allocate memory.");
         }
         return *this;
     }
@@ -96,6 +127,7 @@ public:
     }
 
     T& operator[](size_t index) {
+        if (index >= size) throw out_of_range("index cannot be greater than field size");
         return array[index];
     }
 
@@ -128,11 +160,7 @@ public:
     }
 
     T min() const {
-        if (size == 0)
-        {
-            cout << "Array is empty. Returning 0." << endl;
-            return 0;
-        }
+        if (size == 0) throw underflow_error("Array is empty. Can't be zero.");
         T min_value = array[0];
         for (size_t i = 1; i < size; ++i)
         {
@@ -140,15 +168,11 @@ public:
                 min_value = array[i];
             }
         }
-        return T();
+        return min_value;
     }
 
     T max() const {
-        if (size == 0)
-        {
-            cout << "Array is empty. Returning 0." << endl;
-            return 0;
-        }
+        if (size == 0) throw underflow_error("Array is empty. Can't be zero.");
         T max_value = array[0];
         for (size_t i = 1; i < size; ++i)
         {
@@ -156,10 +180,11 @@ public:
                 max_value = array[i];
             }
         }
-        return T();
+        return max_value;
     }
 
     void sorted() {
+        if (size == 0) throw underflow_error("Array is empty. Cannot sort.");
         for (size_t i = 0; i < size - 1; ++i)
         {
             for (size_t j = 0; j < size - i - 1; ++j)
@@ -173,7 +198,7 @@ public:
             }
         }
 
-        for (size_t i = 0; i < size; i++)
+        for (size_t i = 0; i < size; ++i)
         {
             cout << array[i] << " ";
         }
@@ -203,10 +228,12 @@ public:
     }
 
     void L_pop() {
+        if (size == 0) throw underflow_error("Cannot pop from an empty array.");
         --size;
     }
 
     T& LF_top() {
+        if (size == 0) throw underflow_error("Cannot access top element of an empty array.");
         return array[size - 1];
     }
 
@@ -217,13 +244,14 @@ public:
     }
 
     void errase(const T& idx) {
-        if (idx > size) return;
+        if (idx >= size) throw out_of_range("index is out of bounds.");
         for (size_t i = idx; i < size; ++i)
             array[i] = array[i + 1];
         --size;
     }
 
     void reserve(const T& cps) {
+        if (cps <= 0) throw invalid_argument("Reserve capacity cannot be zero or less than zero.");
         capacity += cps;
     }
 
